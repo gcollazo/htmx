@@ -1,3 +1,4 @@
+/* global htmx */
 htmx.defineExtension("method-override", {
   onEvent: function (name, evt) {
     if (name === "htmx:configRequest") {

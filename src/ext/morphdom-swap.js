@@ -1,3 +1,4 @@
+/* global htmx, morphdom */
 htmx.defineExtension("morphdom-swap", {
   isInlineSwap: function (swapStyle) {
     return swapStyle === "morphdom";

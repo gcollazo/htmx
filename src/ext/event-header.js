@@ -1,3 +1,4 @@
+/* global htmx */
 (function () {
   function stringifyEvent(event) {
     var obj = {};

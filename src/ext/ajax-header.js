@@ -1,3 +1,4 @@
+/* global htmx */
 htmx.defineExtension("ajax-header", {
   onEvent: function (name, evt) {
     if (name === "htmx:configRequest") {

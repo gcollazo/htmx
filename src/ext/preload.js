@@ -1,3 +1,4 @@
+/* global htmx */
 // This adds the "preload" extension to htmx.  By default, this will
 // preload the targets of any tags with `href` or `hx-get` attributes
 // if they also have a `preload` attribute as well.  See documentation
@@ -96,7 +97,7 @@ htmx.defineExtension("preload", {
       // FALL THROUGH to here means we need to add an EventListener
 
       // Apply the listener to the node
-      node.addEventListener(on, function (evt) {
+      node.addEventListener(on, function () {
         if (node.preloadState === "PAUSE") {
           // Only add one event listener
           node.preloadState = "READY"; // Requred for the `load` function to trigger

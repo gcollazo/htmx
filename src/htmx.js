@@ -1,3 +1,4 @@
+/* global Promise */
 //AMD insanity
 (function (root, factory) {
   if (typeof define === "function" && define.amd) {
@@ -145,7 +146,7 @@
     }
 
     function getStartTag(str) {
-      var tagMatcher = /<([a-z][^\/\0>\x20\t\r\n\f]*)/i;
+      var tagMatcher = /<([a-z][^/\0>\x20\t\r\n\f]*)/i;
       var match = tagMatcher.exec(str);
       if (match) {
         return match[1].toLowerCase();
@@ -267,7 +268,7 @@
 
     function mergeObjects(obj1, obj2) {
       for (var key in obj2) {
-        if (obj2.hasOwnProperty(key)) {
+        if (Object.prototype.hasOwnProperty.call(obj2, key)) {
           obj1[key] = obj2[key];
         }
       }
@@ -641,10 +642,11 @@
       } else {
         var eltBeforeNewContent = target.previousSibling;
         insertNodesBefore(parentElt(target), target, fragment, settleInfo);
+        var newElt;
         if (eltBeforeNewContent == null) {
-          var newElt = parentElt(target).firstChild;
+          newElt = parentElt(target).firstChild;
         } else {
-          var newElt = eltBeforeNewContent.nextSibling;
+          newElt = eltBeforeNewContent.nextSibling;
         }
         getInternalData(target).replacedWith = newElt; // tuck away so we can fire events on it later
         settleInfo.elts = []; // clear existing elements
@@ -796,7 +798,7 @@
       if (triggerBody.indexOf("{") === 0) {
         var triggers = parseJSON(triggerBody);
         for (var eventName in triggers) {
-          if (triggers.hasOwnProperty(eventName)) {
+          if (Object.prototype.hasOwnProperty.call(triggers, eventName)) {
             var detail = triggers[eventName];
             if (!isRawObject(detail)) {
               detail = { value: detail };
@@ -819,15 +821,16 @@
       var tokens = [];
       var position = 0;
       while (position < str.length) {
+        var startPosition;
         if (SYMBOL_START.exec(str.charAt(position))) {
-          var startPosition = position;
+          startPosition = position;
           while (SYMBOL_CONT.exec(str.charAt(position + 1))) {
             position++;
           }
           tokens.push(str.substr(startPosition, position - startPosition + 1));
         } else if (STRINGISH_START.indexOf(str.charAt(position)) !== -1) {
           var startChar = str.charAt(position);
-          var startPosition = position;
+          startPosition = position;
           position++;
           while (position < str.length && str.charAt(position) !== startChar) {
             if (str.charAt(position) === "\\") {
@@ -934,7 +937,7 @@
         do {
           consumeUntil(tokens, NOT_WHITESPACE);
           var initialLength = tokens.length;
-          var trigger = consumeUntil(tokens, /[,\[\s]/);
+          var trigger = consumeUntil(tokens, /[,[\s]/);
           if (trigger !== "") {
             if (trigger === "every") {
               var every = { trigger: "every" };
@@ -1285,7 +1288,7 @@
           }, delay);
         }
       };
-      socket.onopen = function (e) {
+      socket.onopen = function () {
         retryCount = 0;
       };
 
@@ -2044,7 +2047,7 @@
     function urlEncode(values) {
       var returnStr = "";
       for (var name in values) {
-        if (values.hasOwnProperty(name)) {
+        if (Object.prototype.hasOwnProperty.call(values, name)) {
           var value = values[name];
           if (Array.isArray(value)) {
             forEach(value, function (v) {
@@ -2061,7 +2064,7 @@
     function makeFormData(values) {
       var formData = new FormData();
       for (var name in values) {
-        if (values.hasOwnProperty(name)) {
+        if (Object.prototype.hasOwnProperty.call(values, name)) {
           var value = values[name];
           if (Array.isArray(value)) {
             forEach(value, function (v) {
@@ -2243,7 +2246,7 @@
           varsValues = parseJSON(str);
         }
         for (var key in varsValues) {
-          if (varsValues.hasOwnProperty(key)) {
+          if (Object.prototype.hasOwnProperty.call(varsValues, key)) {
             if (values[key] == null) {
               values[key] = varsValues[key];
             }
@@ -2514,7 +2517,7 @@
 
       // request headers
       for (var header in headers) {
-        if (headers.hasOwnProperty(header)) {
+        if (Object.prototype.hasOwnProperty.call(headers, header)) {
           var headerValue = headers[header];
           safelySetHeaderValue(xhr, header, headerValue);
         }
@@ -2805,18 +2808,23 @@
     var extensions = {};
     function extensionBase() {
       return {
+        // eslint-disable-next-line no-unused-vars
         onEvent: function (name, evt) {
           return true;
         },
+        // eslint-disable-next-line no-unused-vars
         transformResponse: function (text, xhr, elt) {
           return text;
         },
+        // eslint-disable-next-line no-unused-vars
         isInlineSwap: function (swapStyle) {
           return false;
         },
+        // eslint-disable-next-line no-unused-vars
         handleSwap: function (swapStyle, target, fragment, settleInfo) {
           return false;
         },
+        // eslint-disable-next-line no-unused-vars
         encodeParameters: function (xhr, parameters, elt) {
           return null;
         },

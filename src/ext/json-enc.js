@@ -1,3 +1,4 @@
+/* global htmx */
 htmx.defineExtension("json-enc", {
   onEvent: function (name, evt) {
     if (name === "htmx:configRequest") {
@@ -5,7 +6,7 @@ htmx.defineExtension("json-enc", {
     }
   },
 
-  encodeParameters: function (xhr, parameters, elt) {
+  encodeParameters: function (xhr, parameters) {
     xhr.overrideMimeType("text/json");
     return JSON.stringify(parameters);
   },

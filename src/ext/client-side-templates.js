@@ -1,3 +1,5 @@
+/* global htmx, Mustache, Handlebars, nunjucks */
+/* eslint-disable no-redeclare */
 htmx.defineExtension("client-side-templates", {
   transformResponse: function (text, xhr, elt) {
     var mustacheTemplate = htmx.closest(elt, "[mustache-template]");

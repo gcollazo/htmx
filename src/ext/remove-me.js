@@ -1,3 +1,4 @@
+/* global htmx */
 (function () {
   function maybeRemoveMe(elt) {
     var timing =

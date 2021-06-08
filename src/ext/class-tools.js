@@ -1,3 +1,4 @@
+/* global htmx */
 (function () {
   function splitOnWhitespace(trigger) {
     return trigger.split(/\s+/);

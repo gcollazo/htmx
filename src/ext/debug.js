@@ -1,3 +1,4 @@
+/* global htmx */
 htmx.defineExtension("debug", {
   onEvent: function (name, evt) {
     if (console.debug) {
