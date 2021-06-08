@@ -4,6 +4,7 @@
     "prettier"
   ],
   "env": {
-    "browser": true
+    "browser": true,
+    "amd": true
   }
 }
